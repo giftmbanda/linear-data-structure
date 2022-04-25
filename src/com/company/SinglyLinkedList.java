@@ -1,121 +1,128 @@
 package com.company;
 
 public class SinglyLinkedList<T> {
-    private Node<T> head; // Represent the head and tail of the singly linked list
+    private Node<T> head;
+    private Node<T> tail;
 
     public SinglyLinkedList() {
-        this.head = null;
+        head = null;
+        tail = null;
     }
 
-    // add a node to the linkedList
+    /*
+     * this addNode() method is used to add a node at the end of the list
+     * works the same as add() method
+     */
     public void addNode(T value) {
-        Node<T> current = head; 
-        Node<T> newNode = new Node<>(value); // Create a new node 
+        Node<T> current = head;
+        Node<T> newNode = new Node<>(value); // Create a new node
 
         if (head == null) { // if head = null means list is empty
             head = newNode; // head gets assigned newNode
         } else {
-            while (current.next != null) { 
-                current = current.next; 
+            while (current.getNext() != null) {
+                current = current.getNext();
             }
-            current.next = newNode; 
+            current.setNext(newNode); // current.next gets assigned newNode
         }
     }
 
-    // add a node at the start of the linkedList
+    /*
+     * add a node at the start of the linkedList
+     * works the same as the addAtStart() method
+     */
     public void addNodeFirst(T value) {
         Node<T> newNode = new Node<>(value); // Create a new node
-        newNode.next = head; // assign the head to newNode.next
+        newNode.setNext(head); // assign the head to newNode.next
         head = newNode; // assign newNode to head
     }
 
-    // display a list of all nodes
-    public void showNodes() {
-        //Node current will point to head
-        Node<T> current = head;  
-
-        if (head == null) {
-            System.out.println("List is empty"); 
-        } else {
-            while (current != null) { //iterate through each node
-                //Prints each node by incrementing pointer
-                System.out.print(current.value + " "); 
-                current = current.next;  //increment pointer
-            }
-            System.out.println();
-        }
-    }
-
-    // check is a linkedlist is empty
-    public boolean isEmpty() {
-        return (size() < 1); // return true when size is less than 1, else return false
-    }
-
-    //  return the size of the linkedlist
-    public int size() {
-        // Node current will point to head
-        int counter = 0; 
-        Node<T> current = head;  
-
-        if (head == null) { // Checks if the list is empty
-            return counter;
-        } else {
-            while (current != null) { // iterate through each node
-                counter++; // increment thr counter
-                current = current.next; // shift the current to the next node
-            }
-        }
-        return counter;
-    }
-
-    //scans the linkedlist and removes duplicate nodes
-    public void removeDuplicateNodes() {
-        // Head is the current node
+    // delete a node with the given value
+    public void delete(T value) {
         Node<T> current = head;
-        Node<T> index = null;
-        Node<T> temp = null;
+        Node<T> previous = null;
 
-        // head = null means list is empty
-        if (head == null) {
-            return;
-        }
-        // traverse through the list
-        else {
-            while (current != null) {
-                // temp node points to previous node to index.
-                temp = current;
-                // Index will point to node next to current
-                index = current.next;
-                while (index != null) {
-                    // Check if current node's data is equal to index node's data
-                    if (current.value == index.value) {
-                        // since node is duplicate skip index and point to next node
-                        temp.next = index.next;
-                    } else {
-                        // Temp will point to previous node of index.
-                        temp = index;
-                    }
-                    index = index.next;
+        while (current != null) {
+            if (current.getData().equals(value)) {
+                if (previous == null) {
+                    head = current.getNext();
+                } else {
+                    previous.setNext(current.getNext());
                 }
-                current = current.next;
             }
+            previous = current;
+            current = current.getNext();
         }
     }
 
-//    /* Inserts a new node after the given prev_node. */
-//    public void insertAfter(Node preNode, T value) {
-//        /* 1. Check if the given Node is null */
-//        if (preNode == null) {
-//            System.out.println("The given previous node cannot be null");
-//            return;
-//        }
-//        /* 2 & 3: Allocate the Node & Put in the data*/
-//        Node<T> newNode = new Node<>(value); // Create a new node
-//        /* 4. Make next of new Node as next of prev_node */
-//        newNode.next = preNode.next;
-//        /* 5. make next of prev_node as new_node */
-//        preNode.next = newNode;
-//    }
+    // get the size of the linkedList
+    public int size() {
+        int size = 0;
+        Node<T> current = head;
+        while (current != null) {
+            size++;
+            current = current.getNext();
+        }
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    public void print() {
+        Node<T> current = head;
+        while (current != null) {
+            System.out.print(current.getData() + " ");
+            current = current.getNext();
+        }
+        System.out.println();
+    }
+
+    // scans the linkedlist and removes duplicate nodes
+    public void removeDuplicates() {
+        Node<T> current = head;
+        while (current != null) {
+            Node<T> runner = current;
+            while (runner.getNext() != null) {
+                if (runner.getNext().getData().equals(current.getData())) {
+                    runner.setNext(runner.getNext().getNext());
+                } else {
+                    runner = runner.getNext();
+                }
+            }
+            current = current.getNext();
+        }
+    }
+
+    /*
+     * this add() method is used to add a node at the end of the list
+     * works the same as addNode() method
+     */
+    public void add(T data) {
+        Node<T> newNode = new Node<T>(data);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.setNext(newNode);
+            tail = newNode;
+        }
+    }
+
+    /*
+     * add a node at the start of the linkedList
+     * works the same as the addNodeFirst() method
+     */
+    public void addAtStart(T data) {
+        Node<T> newNode = new Node<T>(data);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            newNode.setNext(head);
+            head = newNode;
+        }
+    }
 
 }
-

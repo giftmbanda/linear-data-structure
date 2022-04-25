@@ -1,12 +1,30 @@
 package com.company;
 
-//Class node having Generic data-type <T>
+// Class node having Generic data-type <T>
 public class Node<T> {
-    public T value; //Data to store (could be int, string, Object etc)
-    public Node<T> next; //Pointer to next node in list
+    private T data;
+    private Node<T> next;
 
-    public Node(T value) {
-        this.value = value;
+    // Constructor
+    public Node(T data) {
+        this.data = data;
         this.next = null;
+    }
+
+    // Getter and Setter methods
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public Node<T> getNext() {
+        return next;
+    }
+
+    public void setNext(Node<T> next) {
+        this.next = next;
     }
 }
