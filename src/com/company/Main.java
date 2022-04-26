@@ -6,7 +6,7 @@ public class Main {
 
                 Queue<Integer> numQueue = new Queue<>(); // last-in-first-out/LIFO
                 Stack<Integer> numStack = new Stack<>(); // first-in-last-out/FILO
-                SinglyLinkedList<Integer> numList = new SinglyLinkedList<>();
+                LinkedList<Integer> numList = new LinkedList<>();
 
                 // =================== Implementation of Queue =======================
                 numQueue.enqueue(1);

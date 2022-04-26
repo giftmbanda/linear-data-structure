@@ -1,1 +1,1 @@
-# linear-data-structure implimentaion with Java
+# linear-data-structure implementation with Java
